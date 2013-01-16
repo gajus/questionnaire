@@ -13,24 +13,59 @@
 <body>
 	<form action="">
 		<fieldset>
-			<input type="radio" name="question[1]" value="0" checked="checked">
-			<input type="radio" name="question[1]" value="1">
+			<p class="question">Have you been to London?</p>
+			<div class="input-group">
+				<label>
+					<span>No</span><input type="radio" name="question[1]" value="0" checked="checked">
+				</label>
+				<label>
+					<span>Yes</span><input type="radio" name="question[1]" value="1">
+				</label>
+			</div>
 		</fieldset>
 		
 		<fieldset>
-			<input type="radio" name="question[2]" value="0" checked="checked">
-			<input type="radio" name="question[2]" value="1">
+			<p class="question">Did you visit the V&A museums?</p>
+			<div class="input-group">
+				<label>
+					<span>No</span><input type="radio" name="question[2]" value="0" checked="checked">
+				</label>
+				<label>
+					<span>Yes</span><input type="radio" name="question[2]" value="1">
+				</label>
+			</div>
 		</fieldset>
 		
 		<fieldset>
-			<input type="radio" name="question[3]" value="0" checked="checked">
-			<input type="radio" name="question[3]" value="1">
+			<p class="question">Did you see the Hollywood Costume collection?</p>
+			<div class="input-group">
+				<label>
+					<span>No</span><input type="radio" name="question[3]" value="0" checked="checked">
+				</label>
+				<label>
+					<span>Yes</span><input type="radio" name="question[3]" value="1">
+				</label>
+			</div>
 		</fieldset>
 		
 		<fieldset>
-			<input type="radio" name="question[4]" value="0" checked="checked">
-			<input type="radio" name="question[4]" value="1">
+			<p class="question">Did you see the Light From the Middle East collection?</p>
+			<div class="input-group">
+				<label>
+					<span>No</span><input type="radio" name="question[4]" value="0">
+				</label>
+				<label>
+					<span>Yes</span><input type="radio" name="question[4]" value="1">
+				</label>
+			</div>
+		</fieldset>
+		<fieldset>
+			<p>Thank you for taking the survey.</p>
 		</fieldset>
 	</form>
+	
+	<div class="footer">
+		<p>This is a demo of a <a href="https://github.com/gajus/questionnaire" target="_blank">Questionnaire</a> implementation.</p>
+	</div>
 </body>
 </html>

@@ -1,5 +1,14 @@
 html, body { margin: 0; }
 
-body { margin: 20px; font: 12px/1 monospace; }
+body { font: 12px/1 monospace; }
 
-fieldset { display: none; }
+form { margin: 20px; width: 500px; }
+input { float: right; }
+
+fieldset { display: none;  overflow: hidden; padding: 0; line-height: 20px; }
+fieldset p { float: left; margin: 10px; width: 300px; }
+
+fieldset .input-group { margin: 10px; width: 120px; float: right; }
+fieldset label { width: 50px; float: left; margin-left: 10px; }
+
+.footer { margin: 20px; }
