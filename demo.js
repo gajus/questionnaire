@@ -12,13 +12,13 @@ $(function () {
 		inputC = fieldsetC.addInput(function (parent) { return parent.find('input'); }),
 		inputD = fieldsetD.addInput(function (parent) { return parent.find('input'); });
 	
-	fieldsetB.link(inputA, function (val) { return val == "1"; });
-		
-	fieldsetC.link(inputB, function (val) { return val == "1"; });
+	fieldsetB.createRoute().link(inputA, function (val) { return val === "1"; });
+	fieldsetC.createRoute().link(inputB, function (val) { return val === "1"; });
+	fieldsetD.createRoute().link(inputC, function (val) { return val === "1"; });
 	
-	fieldsetD.link(inputC, function (val) { return val == "1"; });
-	
-	fieldsetE.link(inputA, function (val) { return val == "0"; });
+	fieldsetE.createRoute().link(inputA, function (val) { return val === "0"; })
+	fieldsetE.createRoute().link(inputB, function (val) { return val === "0"; });
+	fieldsetE.createRoute().link(inputD, function (val) { return val !== false; });
 	
 	myQuestionaire.update();
 });

@@ -24,7 +24,7 @@
 		 * @param {Function} fieldsetFn Expected to return a fieldset element.
 		 */
 		var Fieldset = function (fieldsetFn) {
-			var inputs = [], // This value represents not the inputs contained within the fieldset, but the inputs that determine the fieldset visibility.
+			var routes = [], // An array of array input instances, where every input determines fieldset visibility.
 				selfFieldset = this,
 				visible,
 				fieldsetElm;
@@ -36,27 +36,45 @@
 			}
 			
 			selfFieldset.update = function () {
-				var i, j;
-				for (i = 0, j = inputs.length; i < j; ++i) {
-					if (!inputs[i].input.isVisible() || !inputs[i].callback(inputs[i].input.getValue())) {
-						selfFieldset.hide();
-						return;
+				var i, j, l, k, state = true;
+	
+				for (i = 0, j = routes.length; i < j; i++) {
+					state = true;
+					for (l = 0, k = routes[i].inputs.length; l < k; l++) {
+						if (!routes[i].inputs[l].input.isVisible() || !routes[i].inputs[l].callback(routes[i].inputs[l].input.getValue())) {
+							state = false;
+						}
+					}
+					
+					if (state === true) {
+						break;
 					}
 				}
-				selfFieldset.show();
+				
+				//console.log(routes);
+				
+				selfFieldset[state ? 'show' : 'hide']();
 			};
 			
-			/**
-			 * 
-			 * @param {Function} callback A boolean function to validate input value.
-			 */
-			selfFieldset.link = function (input, callback) {
-				// @todo make sure it is not yet added
-				if (!input instanceof Input) {
-					throw new Error('Fieldset input must be an instance of Input.');
-				}
-				inputs.push({input: input, callback: callback});
-				return this;
+			selfFieldset.createRoute = function () {
+				var route = {
+					inputs: [],
+					/**
+					 * @param {Function} callback A boolean function to validate input value.
+					 */
+					link: function (input, callback) {
+						// @todo make sure it is not yet added
+						if (!input instanceof Input) {
+							throw new Error('Fieldset input must be an instance of Input.');
+						}
+						this.inputs.push({input: input, callback: callback});
+						return this;
+					}
+				};
+				
+				routes.push(route);
+				
+				return route;
 			};
 			
 			selfFieldset.hide = function () {
@@ -93,7 +111,8 @@
 				// @todo If there is more than one input represented by the selector, make sure that it is a radio group with the same name.
 				
 				setValue = function () {
-					var newValue = inputElm.filter(':checked').val();
+					var checked = inputElm.filter(':checked'),
+						newValue = checked.length ? checked.val() : false;
 					
 					if (value !== newValue) {
 						value = newValue;
