@@ -1,5 +1,5 @@
 $(function () {
-	var myQuestionaire = $.ay.questionnaire($('form')),
+	var myQuestionaire = $.ay.questionnaire($('form'), {resetHiddenFields: true}),
 		
 		fieldsetA = myQuestionaire.addFieldset(function (parent) { return parent.find('fieldset').eq(0); }),
 		fieldsetB = myQuestionaire.addFieldset(function (parent) { return parent.find('fieldset').eq(1); }),

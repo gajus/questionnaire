@@ -12,9 +12,14 @@
 	
 	$.ay = $.ay || {};
 	
-	$.ay.questionnaire = function (formElm) {
-		var fieldsets = [],
-			selfQuestionaire = {};
+	$.ay.questionnaire = function (formElm, options) {
+		var settings,
+			fieldsets = [],
+			questionnaire = {};
+		
+		settings = $.extend({
+			'resetHiddenFields': false
+		}, options);
 		
 		if (!(formElm instanceof $) || formElm.length !== 1 || !formElm.is('form')) {
 			throw new Error('Questionaire container must be a single form element.');
@@ -51,9 +56,7 @@
 					}
 				}
 				
-				//console.log(routes);
-				
-				selfFieldset[state ? 'show' : 'hide']();
+				selfFieldset.state(state);
 			};
 			
 			selfFieldset.createRoute = function () {
@@ -77,14 +80,36 @@
 				return route;
 			};
 			
-			selfFieldset.hide = function () {
-				fieldsetElm.hide();
-				visible = false;
-			};
-			
-			selfFieldset.show = function () {
-				fieldsetElm.show();
-				visible = true;
+			selfFieldset.state = function (newState) {
+				visible = newState;
+				fieldsetElm[visible ? 'show' : 'hide']();
+				
+				if (!visible && settings.resetHiddenFields) {
+					fieldsetElm.find('input, select, textarea').each(function () {
+						switch (this.tagName.toLowerCase()) {
+							case 'input':
+								switch (this.type.toLowerCase()) {
+									case 'radio':
+									case 'checkbox':
+										this.checked = false;
+										break;
+									
+									default:
+										throw new Error('Unsupported input type.');
+										break;
+									
+								}
+								break;
+							
+							case 'select':
+								this.selectedIndex = -1;
+								break;
+							
+							case 'textarea':
+								break;
+						}
+					});
+				}
 			};
 			
 			selfFieldset.isVisible = function () {
@@ -98,7 +123,7 @@
 			return selfFieldset;
 		};
 		
-		var Input = function (inputElm, selfFieldset, fieldsetElm) {
+		var Input = function (inputElm, fieldset, fieldsetElm) {
 			var value,
 				registerChange,
 				setValue;
@@ -117,7 +142,7 @@
 					if (value !== newValue) {
 						value = newValue;
 						
-						selfQuestionaire.update();
+						questionnaire.update();
 					}
 				};
 				
@@ -126,12 +151,12 @@
 				throw new Error('Not implemented.');
 			}
 			
-			// prepare initial value
+			// populate the initial value
 			setValue();
 			
 			return {
 				isVisible: function () {
-					return selfFieldset.isVisible();
+					return fieldset.isVisible();
 				},
 				getValue: function () {
 					return value;
@@ -139,7 +164,7 @@
 			};
 		};
 		
-		selfQuestionaire.addFieldset = function (fieldset) {
+		questionnaire.addFieldset = function (fieldset) {
 			fieldset = new Fieldset(fieldset)
 			fieldsets.push(fieldset);
 			return fieldset;
@@ -148,13 +173,13 @@
 		/**
 		 * Called when any of the dependant input value is changed and upon initiation.
 		 */
-		selfQuestionaire.update = function () {
+		questionnaire.update = function () {
 			var i, j;
 			for (i = 0, j = fieldsets.length; i < j; ++i) {
 				fieldsets[i].update();
 			}
 		};
 		
-		return selfQuestionaire;
+		return questionnaire;
 	};
 })($);
