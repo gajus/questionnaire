@@ -1,0 +1,5 @@
+html, body { margin: 0; }
+
+body { margin: 20px; font: 12px/1 monospace; }
+
+fieldset { display: none; }
