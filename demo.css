@@ -5,10 +5,11 @@ body { font: 12px/1 monospace; }
 form { margin: 20px; width: 500px; }
 input { float: right; }
 
-fieldset { display: none;  overflow: hidden; padding: 0; line-height: 20px; }
+fieldset { display: none;  overflow: hidden; padding: 0; line-height: 20px; margin: 0 0 10px 0; border: 1px solid #999; }
+fieldset:hover { background: #fff196; }
 fieldset p { float: left; margin: 10px; width: 300px; }
 
 fieldset .input-group { margin: 10px; width: 120px; float: right; }
-fieldset label { width: 50px; float: left; margin-left: 10px; }
+fieldset label { width: 50px; float: left; margin-left: 10px; cursor: pointer; }
 
 .footer { margin: 20px; }

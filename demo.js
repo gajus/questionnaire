@@ -5,6 +5,7 @@ $(function () {
 		fieldsetB = myQuestionaire.addFieldset(function (parent) { return parent.find('fieldset').eq(1); }),
 		fieldsetC = myQuestionaire.addFieldset(function (parent) { return parent.find('fieldset').eq(2); }),
 		fieldsetD = myQuestionaire.addFieldset(function (parent) { return parent.find('fieldset').eq(3); }),
+		fieldsetE = myQuestionaire.addFieldset(function (parent) { return parent.find('fieldset').eq(4); }),
 		
 		inputA = fieldsetA.addInput(function (parent) { return parent.find('input'); }),
 		inputB = fieldsetB.addInput(function (parent) { return parent.find('input'); }),
@@ -16,6 +17,8 @@ $(function () {
 	fieldsetC.link(inputB, function (val) { return val == "1"; });
 	
 	fieldsetD.link(inputC, function (val) { return val == "1"; });
+	
+	fieldsetE.link(inputA, function (val) { return val == "0"; });
 	
 	myQuestionaire.update();
 });
