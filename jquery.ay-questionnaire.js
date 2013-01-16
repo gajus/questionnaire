@@ -86,26 +86,26 @@
 				
 				if (!visible && settings.resetHiddenFields) {
 					fieldsetElm.find('input, select, textarea').each(function () {
-						switch (this.tagName.toLowerCase()) {
-							case 'input':
-								switch (this.type.toLowerCase()) {
-									case 'radio':
-									case 'checkbox':
-										this.checked = false;
-										break;
-									
-									default:
-										throw new Error('Unsupported input type.');
-										break;
-									
-								}
+						switch (this.type.toLowerCase()) {
+							case 'text':
+							case 'password':
+							case 'textarea':
+							case 'hidden':
+								this.value = '';
 								break;
 							
-							case 'select':
+							case 'radio':
+							case 'checkbox':
+								this.checked = false;
+								break;
+								
+							case 'select-one':
+							case 'select-multi':
 								this.selectedIndex = -1;
 								break;
 							
-							case 'textarea':
+							default:
+								throw new Error('Unsupported input type.');
 								break;
 						}
 					});
